@@ -20,7 +20,7 @@
 	if (result == 1) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("location.href = 'main..jsp'");
+		script.println("location.href = 'main.jsp'");
 		script.println("</script>");
 	}
 	else if (result == 0) {
