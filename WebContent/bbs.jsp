@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/heml; charset="UTF-8">
 <meta name="viewport" content="width=device-width" ,intial-scale="1">
 <%-- 반응형 웹 디자인 --%>
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.css">
 <%--같은 폴더안에있는 bootstrap을 이용하겠다.--%>
 <title>JSP 게시판 웹 사이트</title>
 </head>
@@ -66,7 +66,7 @@
 
 		</div>
 	</nav>
-	<div claa="container">
+	<div class="container">
 		<div class="row">
 			<table class="table table-striped"
 				style="text-align: center; border: 1px solid #dddddd">
@@ -87,8 +87,7 @@
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<a href="write.jsp" class="btn btn-primary"
-					style="margin-right: 30px">글쓰기</a>
+				<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 			</div>
 
 
