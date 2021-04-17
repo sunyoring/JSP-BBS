@@ -22,7 +22,7 @@ request.setCharacterEncoding("UTF-8");
 	if (session.getAttribute("userID") != null) {
 		userID = (String) session.getAttribute("userID");
 	}
-	if (userID != null) {
+	if (userID == null) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인을 하세요.')");

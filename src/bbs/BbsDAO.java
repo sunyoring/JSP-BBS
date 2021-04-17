@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 불러오거나 넣을 때 사용한다.
 
@@ -53,7 +54,7 @@ public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 �
 
 	public int write(String bbsTitle, String userID, String bbsContent) { // 글쓰기 함수
 		String SQL = "INSERT INTO BBS VALUES (?,?,?,?,?,?)";// BBS테이블에 6개의 인자를 들어갈 수 있게 함.
-		//INSERT는 성공한 경우의 0이상의 결과를 반환하고 실패한 경우 -1을 반환한다.
+		// INSERT는 성공한 경우의 0이상의 결과를 반환하고 실패한 경우 -1을 반환한다.
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL); // SQL문장으로 실행
 			pstmt.setInt(1, getNext());
@@ -67,5 +68,45 @@ public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 �
 			e.printStackTrace();
 		}
 		return -1;// 데이터베이스 오류
+	}
+
+	public ArrayList<Bbs> getList(int pageNumber) {
+		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		// 특정 숫자보다 작을 때 삭제가 되지않은 게시글 10개만 가져온다.
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL); // SQL문장으로 실행
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery(); // 실행결과를 가져옴.
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserID(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(1));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public boolean nextPage(int pageNumber) {
+		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1";
+		// 특정 숫자보다 작을 때 삭제가 되지않은 게시글 10개만 가져온다. try {
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL); // SQL문장으로 실행
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery(); // 실행결과를 가져옴.
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
