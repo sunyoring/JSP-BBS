@@ -110,7 +110,7 @@ public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 �
 		return false;
 	}
 
-	public Bbs getBbs(int bbsID) { //글을 불러오는 함수
+	public Bbs getBbs(int bbsID) { // 글을 불러오는 함수
 		String SQL = "SELECT * FROM BBS WHERE bbsID = ? ";
 		// 특정 숫자보다 작을 때 삭제가 되지않은 게시글 10개만 가져온다. try {
 		try {
@@ -133,4 +133,32 @@ public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 �
 		}
 		return null;
 	}
+
+	public int update(int bbsID, String bbsTitle, String bbsContent) { // 특정 bbsID의 타이틀과 내용을 수정하는 함수
+		String SQL = "UPDATE BBS SET bbsTitle = ? ,bbsContent = ? WHERE bbsID = ?";
+		// INSERT는 성공한 경우의 0이상의 결과를 반환하고 실패한 경우 -1을 반환한다.
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL); // SQL문장으로 실행
+			pstmt.setString(1, bbsTitle);
+			pstmt.setString(2, bbsContent);
+			pstmt.setInt(3, bbsID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;// 데이터베이스 오류
+	}
+
+	public int delete(int bbsID) {
+		String SQL = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsID = ?"; // 글을 삭제해도 정보가 남아있을 수 있도록 한다.
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL); // SQL문장으로 실행
+			pstmt.setInt(1, bbsID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;// 데이터베이스 오류
+	}
+
 }

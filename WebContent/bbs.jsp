@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width" ,intial-scale="1">
 <%-- 반응형 웹 디자인 --%>
 <link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/custom.css">
 <%--같은 폴더안에있는 bootstrap을 이용하겠다.--%>
 <title>JSP 게시판 웹 사이트</title>
 <style type="text/css">
