@@ -110,7 +110,7 @@ public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 �
 		return false;
 	}
 
-	public Bbs getBbs(int bbsID) {
+	public Bbs getBbs(int bbsID) { //글을 불러오는 함수
 		String SQL = "SELECT * FROM BBS WHERE bbsID = ? ";
 		// 특정 숫자보다 작을 때 삭제가 되지않은 게시글 10개만 가져온다. try {
 		try {
@@ -124,7 +124,7 @@ public class BbsDAO { // DAO : 데이터베이스 접근 객체, 데이터베이스에서 정보를 �
 				bbs.setUserID(rs.getString(3));
 				bbs.setBbsDate(rs.getString(4));
 				bbs.setBbsContent(rs.getString(5));
-				bbs.setBbsAvailable(rs.getInt(1));
+				bbs.setBbsAvailable(rs.getInt(6));
 				return bbs;
 			}
 
